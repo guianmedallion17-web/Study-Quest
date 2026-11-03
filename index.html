@@ -1,0 +1,558 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#183b2a">
+<title>StudyQuest | Level Up Your Learning</title>
+
+<style>
+:root {
+  --bg: #f4f7ef;
+  --panel: #ffffff;
+  --panel2: #edf4e7;
+  --green: #276844;
+  --green2: #428c55;
+  --lime: #b9df83;
+  --text: #20362a;
+  --muted: #788779;
+  --border: #dfe8d9;
+  --gold: #f0b94d;
+  --shadow: 0 8px 28px #183b2a0a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  transition: .25s;
+}
+body.dark {
+  --bg: #101b15;
+  --panel: #1b2a20;
+  --panel2: #273a2c;
+  --green: #8bd3a0;
+  --green2: #63b97c;
+  --lime: #456b3c;
+  --text: #edf5ec;
+  --muted: #a2b5a3;
+  --border: #344938;
+  --shadow: 0 8px 28px #0002;
+}
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid var(--lime);
+  outline-offset: 2px;
+}
+button:disabled { opacity: .5; cursor: not-allowed; }
+.app {
+  display: grid;
+  grid-template-columns: 245px minmax(0,1fr);
+  min-height: 100vh;
+}
+.sidebar {
+  background: #183b2a;
+  color: #f3f8ee;
+  padding: 25px 17px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.brand { padding: 6px 8px 20px; }
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 25px;
+  font-weight: 850;
+  letter-spacing: -.8px;
+}
+.logo-icon {
+  display: grid;
+  place-items: center;
+  background: #b9df83;
+  color: #183b2a;
+  border-radius: 13px;
+  width: 43px;
+  height: 43px;
+  font-size: 25px;
+}
+.brand p { color: #c0d4c0; font-size: 13px; }
+.nav-label {
+  color: #8fac95;
+  font-size: 10px;
+  letter-spacing: 1.7px;
+  margin: 4px 12px 10px;
+  font-weight: 800;
+}
+nav { display: grid; gap: 6px; }
+.nav-btn {
+  border: 0;
+  border-radius: 11px;
+  padding: 13px;
+  text-align: left;
+  color: #d6e5d7;
+  background: transparent;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 14px;
+}
+.nav-btn:hover, .nav-btn.active {
+  background: #31563e;
+  color: white;
+}
+.nav-btn.active { box-shadow: inset 3px 0 #b9df83; }
+.nav-icon { width: 21px; text-align: center; font-size: 17px; }
+.side-bottom {
+  margin-top: auto;
+  background: #254b34;
+  border: 1px solid #42674a;
+  padding: 16px;
+  border-radius: 15px;
+}
+.side-bottom .seed { font-size: 29px; }
+.side-bottom p { font-size: 12px; color: #c2d6c3; line-height: 1.5; }
+main { padding: 30px; min-width: 0; max-width: 1600px; width: 100%; margin: auto; }
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.eyebrow {
+  color: var(--green2);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+h1,h2,h3,p { overflow-wrap: anywhere; }
+.topbar h1 { font-size: clamp(24px,3vw,34px); margin: 6px 0; letter-spacing: -1px; }
+.topbar p { color: var(--muted); margin: 0; font-size: 14px; }
+.top-actions { display: flex; gap: 8px; }
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: var(--panel);
+}
+.avatar {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: var(--lime);
+  border-radius: 13px;
+  font-weight: 800;
+}
+.view { display: none; }
+.view.active { display: block; animation: appear .2s ease; }
+@keyframes appear { from {opacity:0;transform:translateY(5px)} to {opacity:1;transform:translateY(0)} }
+.card {
+  min-width: 0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 21px;
+  box-shadow: var(--shadow);
+}
+.card h3 { margin: 0 0 14px; font-size: 16px; }
+.hero {
+  background: linear-gradient(115deg,#173d29,#286742 65%,#4a8550);
+  color: white;
+  border-radius: 21px;
+  padding: 27px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 19px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  min-height: 185px;
+}
+.hero:after {
+  content: "🌿";
+  font-size: 155px;
+  position: absolute;
+  right: 15px;
+  bottom: -32px;
+  opacity: .15;
+  transform: rotate(-18deg);
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 1; max-width: 500px; }
+.hero .eyebrow { color: #c3e9a4; }
+.hero h2 { font-size: clamp(25px,3vw,35px); margin: 9px 0; letter-spacing: -.8px; }
+.hero p { color: #d3e6d5; font-size: 14px; line-height: 1.6; margin-bottom: 18px; }
+.btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 15px;
+  background: var(--green);
+  color: white;
+  font-size: 13px;
+  font-weight: 750;
+  transition: transform .15s, opacity .15s;
+}
+.btn:hover { transform: translateY(-1px); opacity: .9; }
+.btn-light { background: #b9df83; color: #183b2a; }
+.btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-danger { background: #a94444; color: white; }
+.hero .btn { background: #c5e998; color: #183b2a; }
+.hero-plant { font-size: 72px; position: relative; z-index: 1; margin-right: 25px; }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 13px;
+  margin-bottom: 19px;
+}
+.stat { padding: 17px; }
+.stat-top { display: flex; align-items: center; justify-content: space-between; gap: 5px; }
+.stat-icon {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  background: var(--panel2);
+  border-radius: 11px;
+  font-size: 18px;
+}
+.stat-value { font-size: 27px; font-weight: 850; margin: 13px 0 4px; letter-spacing: -.8px; }
+.stat-label { font-size: 12px; color: var(--muted); }
+.progress-track { background: var(--panel2); height: 8px; border-radius: 20px; overflow: hidden; margin: 12px 0 7px; }
+.progress-fill { height: 100%; background: var(--green2); border-radius: 20px; width: 0%; transition: width .3s; }
+.muted { color: var(--muted); font-size: 12px; line-height: 1.6; }
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 13px;
+}
+.section-heading h2 { margin: 0; font-size: 19px; letter-spacing: -.3px; }
+.section-heading p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0,1.15fr) minmax(280px,.85fr);
+  gap: 18px;
+  align-items: start;
+}
+.column { display: grid; gap: 18px; min-width: 0; }
+.task-list { display: grid; gap: 8px; }
+.task-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.task-check {
+  accent-color: var(--green2);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.task-info { flex: 1; min-width: 0; }
+.task-title { font-size: 13px; font-weight: 700; overflow-wrap: anywhere; }
+.task-meta { margin-top: 5px; font-size: 11px; color: var(--muted); }
+.task-row.done .task-title { text-decoration: line-through; color: var(--muted); }
+.task-xp { font-size: 11px; color: var(--green2); font-weight: 800; white-space: nowrap; }
+.delete-btn { border: 0; background: transparent; color: var(--muted); font-size: 16px; }
+.empty { text-align: center; color: var(--muted); padding: 25px 8px; font-size: 13px; }
+.add-form { display: grid; grid-template-columns: minmax(0,1fr) 135px auto; gap: 8px; margin-top: 14px; }
+input, select {
+  width: 100%;
+  padding: 11px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  min-width: 0;
+  font-size: 13px;
+}
+.quests { display: grid; gap: 10px; }
+.quest {
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 14px;
+}
+.quest-top { display: flex; align-items: start; gap: 10px; }
+.quest-emoji { font-size: 23px; }
+.quest-info { flex: 1; }
+.quest-info strong { font-size: 13px; display: block; }
+.quest-info p { margin: 5px 0; font-size: 11px; color: var(--muted); }
+.quest-reward { font-size: 11px; color: var(--green2); font-weight: 800; white-space: nowrap; }
+.quest .progress-track { margin-top: 12px; }
+.quest-status { font-size: 11px; color: var(--muted); }
+.garden {
+  min-height: 190px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg,#e6f3db 0%,#f0f5d9 65%,#c9e1ac 65%,#b1d294 100%);
+  border-radius: 15px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  padding: 20px;
+  gap: 8px;
+}
+body.dark .garden { background: linear-gradient(180deg,#2c4531,#344b30 65%,#42653c 65%,#304b2e 100%); }
+.garden-plant {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  min-width: 55px;
+  height: 120px;
+}
+.garden-plant .emoji { font-size: 38px; filter: drop-shadow(0 3px 2px #0001); }
+.garden-plant .plant-name { font-size: 10px; color: #315638; margin-top: 5px; font-weight: 750; }
+body.dark .garden-plant .plant-name { color: #e3f3d9; }
+.garden-lock { opacity: .55; filter: grayscale(1); }
+.garden-caption { font-size: 11px; color: var(--muted); margin-top: 12px; }
+.garden-toolbar { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:12px; }
+.garden-toolbar h2 { margin:0; font-size:19px; }
+.garden-toolbar select { width:auto; max-width:130px; }
+.calendar-header { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:15px; }
+.calendar-header h3 { margin:0; }
+.calendar-header button { background:var(--panel2); color:var(--text); border:0; border-radius:8px; padding:8px 12px; }
+.calendar-grid { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:4px; text-align:center; }
+.weekday { color:var(--muted); font-size:10px; padding:8px 0; }
+.day { position:relative; border:0; border-radius:9px; background:transparent; color:var(--text); min-height:34px; font-size:12px; }
+.day:hover { background:var(--panel2); }
+.day.today { background:var(--green); color:white; }
+.day.selected { outline:2px solid var(--green2); }
+.day.has-task:after { content:""; position:absolute; bottom:3px; left:calc(50% - 2px); width:4px; height:4px; background:var(--green2); border-radius:50%; }
+.day.today.has-task:after { background:white; }
+.timer-display { text-align:center; font-size:clamp(42px,6vw,58px); font-weight:850; font-variant-numeric:tabular-nums; letter-spacing:-2px; margin:16px 0; }
+.timer-controls { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; }
+.timer-modes { display:flex; justify-content:center; flex-wrap:wrap; gap:6px; margin-top:13px; }
+.timer-modes button { border:1px solid var(--border); border-radius:20px; padding:7px 10px; background:transparent; color:var(--muted); font-size:11px; }
+.timer-modes button.active { background:var(--panel2); color:var(--green); border-color:var(--green2); }
+.timer-message { text-align:center; margin:14px 0 0; }
+.quiz-question { font-size:18px; font-weight:800; line-height:1.5; margin:18px 0; }
+.quiz-options { display:grid; gap:9px; }
+.quiz-option { padding:13px; border:1px solid var(--border); background:var(--bg); color:var(--text); text-align:left; border-radius:11px; font-size:13px; }
+.quiz-option:hover:not(:disabled) { border-color:var(--green2); }
+.quiz-option.correct { background:#e2f4d9; border-color:#6bad59; color:#224e2d; }
+.quiz-option.wrong { background:#fbe5df; border-color:#cf7770; color:#8a312c; }
+body.dark .quiz-option.correct { background:#294d32; color:#d9f3d7; }
+body.dark .quiz-option.wrong { background:#542c2b; color:#ffdfd9; }
+.quiz-feedback { min-height:25px; font-size:13px; line-height:1.6; margin:12px 0; }
+.quiz-footer { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:17px; }
+.badges-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.badge-card { border:1px solid var(--border); background:var(--bg); border-radius:13px; padding:16px 8px; text-align:center; }
+.badge-card .badge-icon { font-size:31px; }
+.badge-card strong { display:block; font-size:12px; margin:8px 0 4px; }
+.badge-card p { font-size:10px; color:var(--muted); margin:0; }
+.badge-card.locked { opacity:.5; filter:grayscale(1); }
+.profile-row { display:flex; align-items:center; gap:14px; padding:14px 0; border-bottom:1px solid var(--border); }
+.profile-avatar { width:56px; height:56px; background:var(--panel2); display:grid; place-items:center; border-radius:15px; font-size:27px; }
+.profile-info { flex:1; }
+.profile-info strong { font-size:14px; }
+.profile-info p { margin:5px 0 0; font-size:12px; color:var(--muted); }
+.toast {
+  position:fixed;
+  z-index:10;
+  bottom:22px;
+  left:50%;
+  transform:translate(-50%,20px);
+  background:#183b2a;
+  color:white;
+  padding:13px 20px;
+  border-radius:12px;
+  font-size:13px;
+  box-shadow:0 8px 30px #0002;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  max-width:calc(100vw - 30px);
+  text-align:center;
+}
+.toast.show { opacity:1; transform:translate(-50%,0); }
+footer { text-align:center; padding:30px 10px 5px; color:var(--muted); font-size:11px; }
+[hidden] { display:none !important; }
+
+@media(min-width:1400px) {
+  main { padding:36px 42px; }
+  .dashboard-grid { grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr); }
+}
+@media(max-width:1050px) {
+  .app { grid-template-columns:205px minmax(0,1fr); }
+  main { padding:22px; }
+  .stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .dashboard-grid { grid-template-columns:1fr; }
+  .right-column { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .right-column .card:last-child { grid-column:1/-1; }
+}
+@media(max-width:720px) {
+  .app { grid-template-columns:1fr; }
+  .sidebar { padding:12px; gap:10px; }
+  .brand { padding:0 5px; }
+  .brand p, .side-bottom, .nav-label { display:none; }
+  .logo { font-size:20px; }
+  .logo-icon { width:34px; height:34px; }
+  nav { display:flex; overflow-x:auto; gap:5px; }
+  .nav-btn { flex-shrink:0; padding:10px; font-size:12px; gap:7px; }
+  .nav-icon { font-size:15px; }
+  main { padding:15px; }
+  .topbar { margin-bottom:18px; }
+  .hero { padding:22px; min-height:165px; }
+  .hero-plant { font-size:52px; margin-right:0; }
+  .stats { gap:9px; }
+  .stat { padding:14px; }
+  .right-column { grid-template-columns:1fr; }
+  .right-column .card:last-child { grid-column:auto; }
+}
+@media(max-width:420px) {
+  .topbar h1 { font-size:23px; }
+  .topbar p { font-size:12px; }
+  main { padding:11px; }
+  .hero { padding:18px; }
+  .hero-plant { font-size:38px; }
+  .card { padding:15px; }
+  .stat-value { font-size:23px; }
+  .add-form { grid-template-columns:1fr 1fr; }
+  .add-form input:first-child { grid-column:1/-1; }
+  .add-form button { grid-column:1/-1; }
+  .badges-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation:none !important; transition:none !important; }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="logo"><span class="logo-icon">🌱</span> StudyQuest</div>
+    <p>Level up your learning.</p>
+  </div>
+
+  <div>
+    <div class="nav-label">YOUR ADVENTURE</div>
+    <nav>
+      <button class="nav-btn active" data-view="home"><span class="nav-icon">⌂</span> Dashboard</button>
+      <button class="nav-btn" data-view="tasks"><span class="nav-icon">☑</span> My Tasks</button>
+      <button class="nav-btn" data-view="quests"><span class="nav-icon">⚔</span> Daily Quests</button>
+      <button class="nav-btn" data-view="garden"><span class="nav-icon">♧</span> My Garden</button>
+      <button class="nav-btn" data-view="quiz"><span class="nav-icon">✎</span> Quiz Arena</button>
+      <button class="nav-btn" data-view="focus"><span class="nav-icon">◷</span> Focus Room</button>
+      <button class="nav-btn" data-view="achievements"><span class="nav-icon">♜</span> Achievements</button>
+      <button class="nav-btn" data-view="settings"><span class="nav-icon">⚙</span> Settings</button>
+    </nav>
+  </div>
+
+  <div class="side-bottom">
+    <div class="seed">🌿</div>
+    <strong>Keep growing!</strong>
+    <p>Every focused minute plants a seed for your future.</p>
+  </div>
+</aside>
+
+<main>
+<header class="topbar">
+  <div>
+    <div class="eyebrow" id="dateGreeting">YOUR LEARNING ADVENTURE</div>
+    <h1 id="pageTitle">Welcome back, Scholar! 👋</h1>
+    <p>Small steps today. Big achievements tomorrow.</p>
+  </div>
+  <div class="top-actions">
+    <button class="icon-btn" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">☾</button>
+    <div class="avatar" title="Your profile">🎓</div>
+  </div>
+</header>
+
+<!-- DASHBOARD -->
+<section class="view active" id="home">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</div>
+      <h2>Ready to level up?</h2>
+      <p>Complete your quests, earn XP, and watch your knowledge garden grow. Every little win counts!</p>
+      <button class="btn" id="heroQuestBtn">Explore Daily Quests →</button>
+    </div>
+    <div class="hero-plant">🪴</div>
+  </div>
+
+  <div class="stats">
+    <div class="card stat">
+      <div class="stat-top"><span class="stat-label">TOTAL EXPERIENCE</span><span class="stat-icon">⚡</span></div>
+      <div class="stat-value" id="xpStat">0 XP</div>
+      <div class="muted">Your effort adds up</div>
+    </div>
+    <div class="card stat">
+      <div class="stat-top"><span class="stat-label">CURRENT LEVEL</span><span class="stat-icon">🏆</span></div>
+      <div class="stat-value" id="levelStat">Level 1</div>
+      <div class="progress-track"><div class="progress-fill" id="levelBar"></div></div>
+      <div class="muted" id="levelProgress">0 / 100 XP to next level</div>
+    </div>
+    <div class="card stat">
+      <div class="stat-top"><span class="stat-label">TASKS COMPLETED</span><span class="stat-icon">✓</span></div>
+      <div class="stat-value" id="taskStat">0</div>
+      <div class="muted">One win at a time</div>
+    </div>
+    <div class="card stat">
+      <div class="stat-top"><span class="stat-label">FOCUS SESSIONS</span><span class="stat-icon">◷</span></div>
+      <div class="stat-value" id="focusStat">0</div>
+      <div class="muted">Deep work pays off</div>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <div class="column">
+      <div class="card">
+        <div class="section-heading">
+          <div><h2>📚 Your Missions</h2><p>Your next small wins start here.</p></div>
+          <button class="btn btn-outline" id="allTasksBtn">View all</button>
+        </div>
+        <div class="task-list" id="dashboardTasks"></div>
+        <p class="muted">Complete a task to earn XP. Each task rewards XP only once.</p>
+      </div>
+
+      <div class="card">
+        <div class="section-heading">
+          <div><h2>⚔ Daily Quests</h2><p>Bonus rewards for building good habits.</p></div>
+          <button class="btn btn-outline" id="allQuestsBtn">View all</button>
+        </div>
+        <div class="quests" id="dashboardQuests"></div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <div class="section-heading">
+          <div><h2>🌱 Your Knowledge Garden</h2><p>Grow your garden as you progress.</p></div>
+          <button class="btn btn-outline" id="gardenBtn">Visit</button>
+        </div>
+        <div class="garden" id="miniGarden"></div>
+        <p class="garden-caption" id="gardenCaption">Earn XP to unlock more plants.</p>
+      </div>
+
+      <div class="card">
+        <div class="section-heading">
+          <div><h2>⏱ Focus Room</h2><p>One session at a time.</p></div>
+          <span class="stat-icon">🎯</span>
+        </div>
+        <div class="timer-display" id="timerDisplay">25:00</div>
+        <div class="timer-controls">
+          <button class="btn" id="timerStart">▶ Start</button>
+          <button class="btn btn-outline" id="timerPause">Ⅱ Pause</button>
+          <button class="btn btn-outline" id="timerReset">↻ Reset</button>
+        </div>
+        <div class="timer-modes">
+          <button class="active" data-minutes="25">Focus 25m</button>
+          <button data-
