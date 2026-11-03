@@ -555,4 +555,779 @@ footer { text-align:center; padding:30px 10px 5px; color:var(--muted); font-size
         </div>
         <div class="timer-modes">
           <button class="active" data-minutes="25">Focus 25m</button>
-          <button data-
+          <button data-minutes="5">Short break 5m</button>
+          <button data-minutes="15">Long break 15m</button>
+        </div>
+        <p class="muted timer-message" id="timerMessage">Ready when you are. 🌿</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TASKS -->
+<section class="view" id="tasks">
+  <div class="card">
+    <div class="section-heading">
+      <div><h2>📚 My Tasks</h2><p>Turn your assignments into achievable missions.</p></div>
+    </div>
+    <form id="taskForm" class="add-form">
+      <input id="taskInput" placeholder="e.g. Review CC100 Chapter 4" maxlength="100" required>
+      <input id="taskDate" type="date" aria-label="Task deadline">
+      <button class="btn" type="submit">+ Add Task</button>
+    </form>
+    <div class="section-heading" style="margin-top:24px">
+      <h2>Mission Board</h2>
+      <select id="taskFilter" style="width:auto">
+        <option value="all">All tasks</option>
+        <option value="active">Incomplete</option>
+        <option value="done">Completed</option>
+      </select>
+    </div>
+    <div class="task-list" id="allTasks"></div>
+    <div id="taskSummary" class="muted" style="margin-top:14px"></div>
+  </div>
+</section>
+
+<!-- DAILY QUESTS -->
+<section class="view" id="quests">
+  <div class="card">
+    <div class="section-heading">
+      <div><h2>⚔ Daily Quest Board</h2><p>Complete your daily challenges for bonus XP.</p></div>
+      <span class="stat-icon">✨</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="questOverallBar"></div></div>
+    <p class="muted" id="questOverallText"></p>
+    <div class="quests" id="allQuests"></div>
+    <p class="muted">Daily quests refresh at midnight according to your device's local date. Rewards are saved locally.</p>
+  </div>
+</section>
+
+<!-- GARDEN -->
+<section class="view" id="garden">
+  <div class="card">
+    <div class="garden-toolbar">
+      <div><h2>🌿 Your Knowledge Garden</h2><p class="muted">Every achievement helps your garden flourish.</p></div>
+      <select id="gardenTheme" aria-label="Garden theme">
+        <option value="day">Daylight</option>
+        <option value="night">Moonlight</option>
+      </select>
+    </div>
+    <div class="garden" id="fullGarden" style="min-height:290px"></div>
+    <div class="section-heading" style="margin-top:24px">
+      <div><h2>Garden Collection</h2><p>Unlock new plants as you reach XP milestones.</p></div>
+    </div>
+    <div class="badges-grid" id="plantCollection"></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="view" id="quiz">
+  <div class="card">
+    <div class="eyebrow">KNOWLEDGE IS POWER</div>
+    <h2 style="margin-bottom:5px">✎ Quiz Arena</h2>
+    <p class="muted">Test your computing knowledge. Earn 10 XP for every correct answer.</p>
+    <div class="progress-track"><div class="progress-fill" id="quizBar"></div></div>
+    <div class="muted" id="quizCounter">Question 1</div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div>
+    <div class="quiz-footer">
+      <span class="muted" id="quizScore">Score: 0</span>
+      <button class="btn" id="quizNext" disabled>Next question →</button>
+    </div>
+    <div id="quizEnd" hidden style="text-align:center;padding:20px">
+      <div style="font-size:45px">🏆</div>
+      <h2>Quiz completed!</h2>
+      <p id="quizResult"></p>
+      <button class="btn" id="quizAgain">Play Again</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOCUS -->
+<section class="view" id="focus">
+  <div class="card" style="max-width:650px;margin:auto">
+    <div class="eyebrow" style="text-align:center">YOUR PERSONAL STUDY SPACE</div>
+    <h2 style="text-align:center">🎯 Focus Room</h2>
+    <p class="muted" style="text-align:center">Put distractions aside and give one task your attention.</p>
+    <div class="timer-display" id="timerDisplay2">25:00</div>
+    <div class="timer-controls">
+      <button class="btn" id="timerStart2">▶ Start Focus</button>
+      <button class="btn btn-outline" id="timerPause2">Ⅱ Pause</button>
+      <button class="btn btn-outline" id="timerReset2">↻ Reset</button>
+    </div>
+    <div class="timer-modes">
+      <button class="active" data-minutes="25">Focus 25m</button>
+      <button data-minutes="5">Short break 5m</button>
+      <button data-minutes="15">Long break 15m</button>
+    </div>
+    <p class="timer-message muted" id="timerMessage2">Choose a task, then press Start.</p>
+    <div class="card" style="margin-top:22px;background:var(--bg);box-shadow:none">
+      <h3>💡 Focus tip</h3>
+      <p class="muted">Keep only the materials you need nearby. Try to finish one small goal before switching to another.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section class="view" id="achievements">
+  <div class="card">
+    <div class="section-heading">
+      <div><h2>🏆 Achievement Hall</h2><p>Celebrate your progress, one milestone at a time.</p></div>
+    </div>
+    <div class="stats" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <div class="card stat"><div class="stat-label">BADGES UNLOCKED</div><div class="stat-value" id="badgeCount">0</div></div>
+      <div class="card stat"><div class="stat-label">TOTAL XP EARNED</div><div class="stat-value" id="badgeXP">0</div></div>
+    </div>
+    <div class="badges-grid" id="achievementGrid"></div>
+  </div>
+</section>
+
+<!-- SETTINGS -->
+<section class="view" id="settings">
+  <div class="card">
+    <h2>⚙ Settings & Profile</h2>
+    <div class="profile-row">
+      <div class="profile-avatar">🎓</div>
+      <div class="profile-info">
+        <strong id="profileLevel">Level 1 Scholar</strong>
+        <p id="profileSummary">Your adventure is just beginning.</p>
+      </div>
+    </div>
+    <form id="nameForm" style="margin-top:20px">
+      <label for="playerName" class="muted">Your display name</label>
+      <div style="display:flex;gap:8px;margin-top:7px">
+        <input id="playerName" maxlength="25" placeholder="Enter your name" required>
+        <button class="btn" type="submit">Save</button>
+      </div>
+    </form>
+    <div class="profile-row" style="margin-top:15px">
+      <div class="profile-info"><strong>Appearance</strong><p>Switch between light and dark mode.</p></div>
+      <button class="btn btn-outline" id="themeBtn2">Toggle theme</button>
+    </div>
+    <div class="profile-row">
+      <div class="profile-info"><strong>Reset progress</strong><p>Erase tasks, XP, badges, and saved game data.</p></div>
+      <button class="btn btn-danger" id="resetGame">Reset</button>
+    </div>
+    <p class="muted" style="margin-top:18px">Your game is stored in this browser using local storage. This prototype does not use online accounts or synchronize progress across devices.</p>
+  </div>
+</section>
+
+<footer>STUDYQUEST © 2026 · LEVEL UP YOUR LEARNING 🌱</footer>
+</main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+// ===============================
+// STUDYQUEST GAME DATA
+// ===============================
+const KEY = "studyquest_save_v1";
+const THEME_KEY = "studyquest_theme_v1";
+
+function localDate(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth()+1).padStart(2,"0");
+  const d = String(date.getDate()).padStart(2,"0");
+  return `${y}-${m}-${d}`;
+}
+
+function newGame() {
+  return {
+    name: "Scholar",
+    xp: 0,
+    tasks: [],
+    nextId: 1,
+    completedTotal: 0,
+    focusSessions: 0,
+    focusMinutes: 0,
+    lastFocusDate: "",
+    gardenTheme: "day",
+    questDate: localDate(),
+    questClaims: [],
+    quizBest: 0,
+    quizCorrect: 0,
+    quizAnswered: [],
+    lastLoginDate: localDate()
+  };
+}
+
+function loadGame() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY));
+    if (saved && typeof saved === "object") {
+      const base = newGame();
+      return {
+        ...base,
+        ...saved,
+        tasks: Array.isArray(saved.tasks) ? saved.tasks : [],
+        questClaims: Array.isArray(saved.questClaims) ? saved.questClaims : [],
+        quizAnswered: Array.isArray(saved.quizAnswered) ? saved.quizAnswered : []
+      };
+    }
+  } catch (e) {}
+  return newGame();
+}
+
+let game = loadGame();
+let toastTimer;
+let selectedView = "home";
+
+function save() {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(game));
+  } catch (e) {
+    showToast("Storage unavailable. Your progress may not persist.");
+  }
+}
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[char]);
+}
+
+function getLevel() {
+  return Math.floor(game.xp / 100) + 1;
+}
+function xpIntoLevel() {
+  return game.xp % 100;
+}
+function getXPToNext() {
+  return 100 - xpIntoLevel();
+}
+
+function awardXP(amount, message) {
+  const before = getLevel();
+  game.xp += amount;
+  save();
+  renderAll();
+  const after = getLevel();
+  showToast(message + " +" + amount + " XP!");
+  if (after > before) {
+    setTimeout(() => showToast("🎉 LEVEL UP! You reached Level " + after + "!"), 650);
+  }
+}
+
+function refreshDailyQuests() {
+  const today = localDate();
+  if (game.questDate !== today) {
+    game.questDate = today;
+    game.questClaims = [];
+    save();
+  }
+}
+refreshDailyQuests();
+
+// ===============================
+// NAVIGATION
+// ===============================
+const viewTitles = {
+  home:"Welcome back",
+  tasks:"My Missions",
+  quests:"Daily Quest Board",
+  garden:"Knowledge Garden",
+  quiz:"Quiz Arena",
+  focus:"Focus Room",
+  achievements:"Achievement Hall",
+  settings:"Settings & Profile"
+};
+
+document.querySelectorAll(".nav-btn").forEach(button => {
+  button.addEventListener("click", () => openView(button.dataset.view));
+});
+
+function openView(view) {
+  selectedView = view;
+  document.querySelectorAll(".nav-btn").forEach(button => {
+    button.classList.toggle("active", button.dataset.view === view);
+  });
+  document.querySelectorAll(".view").forEach(section => {
+    section.classList.toggle("active", section.id === view);
+  });
+  document.getElementById("pageTitle").textContent =
+    viewTitles[view] + (view === "home" ? ", " + game.name + "! 👋" : "");
+  if (view === "quiz" && quizIndex >= quiz.length) startQuiz();
+  if (view === "settings") document.getElementById("playerName").value = game.name;
+  renderAll();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+document.getElementById("heroQuestBtn").addEventListener("click", () => openView("quests"));
+document.getElementById("allTasksBtn").addEventListener("click", () => openView("tasks"));
+document.getElementById("allQuestsBtn").addEventListener("click", () => openView("quests"));
+document.getElementById("gardenBtn").addEventListener("click", () => openView("garden"));
+
+// ===============================
+// THEME
+// ===============================
+function applyTheme(theme) {
+  document.body.classList.toggle("dark", theme === "dark");
+  localStorage.setItem(THEME_KEY, theme);
+  document.getElementById("themeBtn").textContent = theme === "dark" ? "☀" : "☾";
+}
+applyTheme(localStorage.getItem(THEME_KEY) || "light");
+document.getElementById("themeBtn").addEventListener("click", () => {
+  applyTheme(document.body.classList.contains("dark") ? "light" : "dark");
+});
+document.getElementById("themeBtn2").addEventListener("click", () => {
+  applyTheme(document.body.classList.contains("dark") ? "light" : "dark");
+});
+
+// ===============================
+// TASKS AND XP
+// ===============================
+const taskForm = document.getElementById("taskForm");
+const taskInput = document.getElementById("taskInput");
+const taskDate = document.getElementById("taskDate");
+
+taskForm.addEventListener("submit", event => {
+  event.preventDefault();
+  const title = taskInput.value.trim();
+  if (!title) return;
+  game.tasks.push({
+    id: game.nextId++,
+    title,
+    date: taskDate.value,
+    done: false,
+    rewarded: false,
+    created: localDate()
+  });
+  save();
+  taskInput.value = "";
+  taskDate.value = "";
+  renderAll();
+  showToast("New mission added! Good luck. 📚");
+});
+
+document.getElementById("taskFilter").addEventListener("change", renderTasks);
+
+function toggleTask(id, checked) {
+  const task = game.tasks.find(item => item.id === id);
+  if (!task || task.done === checked) return;
+  task.done = checked;
+
+  if (checked) {
+    game.completedTotal++;
+    if (!task.rewarded) {
+      task.rewarded = true;
+      game.xp += 20;
+      showToast("Mission complete! +20 XP ⚡");
+    } else {
+      showToast("Mission marked complete again.");
+    }
+  } else {
+    showToast("Mission reopened. Your earned XP stays yours.");
+  }
+  save();
+  renderAll();
+}
+
+function deleteTask(id) {
+  if (!confirm("Delete this mission?")) return;
+  game.tasks = game.tasks.filter(task => task.id !== id);
+  save();
+  renderAll();
+  showToast("Mission removed.");
+}
+
+function taskMarkup(task) {
+  const due = task.date
+    ? "Due " + new Date(task.date + "T12:00:00").toLocaleDateString(undefined,{month:"short",day:"numeric"})
+    : "No deadline";
+  const overdue = task.date && task.date < localDate() && !task.done;
+  return `
+    <div class="task-row ${task.done ? "done" : ""}">
+      <input class="task-check" type="checkbox" data-check="${task.id}"
+        ${task.done ? "checked" : ""} aria-label="Complete ${escapeHTML(task.title)}">
+      <div class="task-info">
+        <div class="task-title">${escapeHTML(task.title)}</div>
+        <div class="task-meta">${overdue ? "⚠ Overdue · " : ""}${escapeHTML(due)}</div>
+      </div>
+      <span class="task-xp">${task.rewarded ? "✓ Earned" : "+20 XP"}</span>
+      <button class="delete-btn" data-delete="${task.id}" aria-label="Delete task">×</button>
+    </div>`;
+}
+
+function bindTaskActions(container) {
+  container.querySelectorAll("[data-check]").forEach(input => {
+    input.addEventListener("change", () =>
+      toggleTask(Number(input.dataset.check), input.checked));
+  });
+  container.querySelectorAll("[data-delete]").forEach(button => {
+    button.addEventListener("click", () => deleteTask(Number(button.dataset.delete)));
+  });
+}
+
+function renderTasks() {
+  const dashboard = document.getElementById("dashboardTasks");
+  const all = document.getElementById("allTasks");
+  const filter = document.getElementById("taskFilter").value;
+
+  const incomplete = game.tasks.filter(task => !task.done);
+  dashboard.innerHTML = incomplete.length
+    ? incomplete.slice(0,4).map(taskMarkup).join("")
+    : '<div class="empty">🌱 No pending missions! Add a task to begin your next adventure.</div>';
+
+  const filtered = game.tasks.filter(task =>
+    filter === "all" || (filter === "active" && !task.done) ||
+    (filter === "done" && task.done)
+  ).slice().sort((a,b) => Number(a.done)-Number(b.done));
+
+  all.innerHTML = filtered.length
+    ? filtered.map(taskMarkup).join("")
+    : '<div class="empty">Nothing here yet. Add a mission above!</div>';
+
+  bindTaskActions(dashboard);
+  bindTaskActions(all);
+
+  document.getElementById("taskSummary").textContent =
+    game.tasks.filter(task => task.done).length + " completed · " +
+    incomplete.length + " remaining · " + game.tasks.length + " total";
+}
+
+// ===============================
+// DAILY QUESTS
+// ===============================
+const questDefinitions = [
+  {id:"task",icon:"📚",title:"Mission Accomplished",desc:"Complete one school task.",reward:25,goal:1},
+  {id:"focus",icon:"🎯",title:"Focus Explorer",desc:"Finish one 25-minute focus session.",reward:30,goal:1},
+  {id:"quiz",icon:"🧠",title:"Knowledge Seeker",desc:"Answer three quiz questions correctly.",reward:25,goal:3}
+];
+
+function questProgress(q) {
+  if (q.id === "task") return Math.min(1, game.tasks.filter(t => t.done && t.created === localDate()).length);
+  if (q.id === "focus") return game.lastFocusDate === localDate() ? 1 : 0;
+  if (q.id === "quiz") return Math.min(3, game.quizAnswered.filter(x => x.date === localDate() && x.correct).length);
+  return 0;
+}
+
+function claimQuest(id) {
+  refreshDailyQuests();
+  const q = questDefinitions.find(item => item.id === id);
+  if (!q || game.questClaims.includes(id) || questProgress(q) < q.goal) return;
+  game.questClaims.push(id);
+  awardXP(q.reward, "Daily quest completed!");
+}
+
+function questMarkup(q) {
+  const progress = questProgress(q);
+  const claimed = game.questClaims.includes(q.id);
+  const percent = Math.round(progress / q.goal * 100);
+  const action = claimed
+    ? '<button class="btn btn-outline" disabled>✓ Claimed</button>'
+    : progress >= q.goal
+      ? `<button class="btn" data-claim="${q.id}">Claim reward</button>`
+      : `<span class="quest-status">${progress}/${q.goal} completed</span>`;
+
+  return `<div class="quest">
+    <div class="quest-top">
+      <div class="quest-emoji">${q.icon}</div>
+      <div class="quest-info"><strong>${q.title}</strong><p>${q.desc}</p></div>
+      <div class="quest-reward">+${q.reward} XP</div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" style="width:${percent}%"></div></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px">
+      <span class="quest-status">${claimed ? "Reward collected!" : progress >= q.goal ? "Quest completed!" : "Keep going!"}</span>
+      ${action}
+    </div>
+  </div>`;
+}
+
+function renderQuests() {
+  refreshDailyQuests();
+  const containers = [
+    document.getElementById("dashboardQuests"),
+    document.getElementById("allQuests")
+  ];
+  containers.forEach((container,index) => {
+    const list = index === 0 ? questDefinitions.slice(0,2) : questDefinitions;
+    container.innerHTML = list.map(questMarkup).join("");
+    container.querySelectorAll("[data-claim]").forEach(button => {
+      button.addEventListener("click", () => claimQuest(button.dataset.claim));
+    });
+  });
+
+  const completed = questDefinitions.filter(q =>
+    questProgress(q) >= q.goal || game.questClaims.includes(q.id)
+  ).length;
+  document.getElementById("questOverallBar").style.width =
+    Math.round(completed / questDefinitions.length * 100) + "%";
+  document.getElementById("questOverallText").textContent =
+    completed + " of " + questDefinitions.length + " daily quests completed or claimed.";
+}
+
+// ===============================
+// GARDEN AND UNLOCKS
+// ===============================
+const plants = [
+  {level:1,icon:"🌱",name:"Little Sprout"},
+  {level:2,icon:"🌷",name:"Tulip"},
+  {level:3,icon:"🌻",name:"Sunflower"},
+  {level:4,icon:"🌵",name:"Cactus"},
+  {level:5,icon:"🌳",name:"Mighty Tree"},
+  {level:7,icon:"🌴",name:"Palm Tree"},
+  {level:10,icon:"🌸",name:"Cherry Blossom"},
+  {level:15,icon:"🌲",name:"Evergreen"}
+];
+
+function renderGarden() {
+  const unlocked = plants.filter(p => getLevel() >= p.level);
+  const locked = plants.filter(p => getLevel() < p.level);
+  const selected = game.gardenTheme;
+
+  document.querySelectorAll("#miniGarden,#fullGarden").forEach(container => {
+    container.style.background = selected === "night"
+      ? "linear-gradient(180deg,#1d3148 0%,#34495b 65%,#4b6944 65%,#304b2e 100%)"
+      : "";
+    container.innerHTML = unlocked.map(p =>
+      `<div class="garden-plant"><div class="emoji">${p.icon}</div><div class="plant-name">${p.name}</div></div>`
+    ).join("") + locked.slice(0, Math.max(0, 4-unlocked.length)).map(p =>
+      `<div class="garden-plant garden-lock"><div class="emoji">🔒</div><div class="plant-name">Level ${p.level}</div></div>`
+    ).join("");
+  });
+
+  document.getElementById("gardenCaption").textContent =
+    unlocked.length + " plants unlocked. Your garden grows with your level!";
+
+  document.getElementById("plantCollection").innerHTML = plants.map(p => {
+    const isUnlocked = getLevel() >= p.level;
+    return `<div class="badge-card ${isUnlocked ? "" : "locked"}">
+        document.getElementById("quizFeedback").textContent =
+    (correct ? "✓ Correct! " : "✗ Not quite. ") + q.e;
+  document.getElementById("quizScore").textContent = "Score: " + quizScore;
+  document.getElementById("quizNext").disabled = false;
+  save();
+  renderAll();
+}
+
+document.getElementById("quizNext").addEventListener("click", () => {
+  if (!quizLocked) return;
+  if (quizIndex < quiz.length-1) {
+    quizIndex++;
+    renderQuizQuestion();
+  } else {
+    finishQuiz();
+  }
+});
+
+function finishQuiz() {
+  const runScore = quizScore;
+  game.quizBest = Math.max(game.quizBest,runScore);
+  save();
+  renderAll();
+  document.getElementById("quizBar").style.width = "100%";
+  document.getElementById("quizQuestion").hidden = true;
+  document.getElementById("quizOptions").hidden = true;
+  document.getElementById("quizCounter").hidden = true;
+  document.getElementById("quizScore").hidden = true;
+  document.getElementById("quizNext").hidden = true;
+  document.getElementById("quizEnd").hidden = false;
+  document.getElementById("quizResult").textContent =
+    "You scored " + runScore + " out of " + quiz.length +
+    ". Correct answers also earned XP. " +
+    (runScore >= 9 ? "Excellent work, Scholar!" : "Keep practicing to improve your score!");
+}
+
+document.getElementById("quizAgain").addEventListener("click",startQuiz);
+
+// ===============================
+// FOCUS TIMER
+// ===============================
+let timerMinutes = 25;
+let remaining = 25*60;
+let timerInterval = null;
+let timerEndAt = null;
+let timerRunId = 0;
+
+function displayTime() {
+  const text = String(Math.floor(remaining/60)).padStart(2,"0") + ":" +
+    String(remaining%60).padStart(2,"0");
+  document.getElementById("timerDisplay").textContent = text;
+  document.getElementById("timerDisplay2").textContent = text;
+  document.title = text + " | StudyQuest";
+}
+
+function pauseTimer() {
+  if (timerInterval !== null) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  timerEndAt = null;
+}
+
+function resetTimer() {
+  pauseTimer();
+  timerRunId++;
+  remaining = timerMinutes * 60;
+  displayTime();
+  setTimerMessage("Ready when you are. 🌿");
+}
+
+function setTimerMessage(message) {
+  document.getElementById("timerMessage").textContent = message;
+  document.getElementById("timerMessage2").textContent = message;
+}
+
+function startTimer() {
+  if (timerInterval !== null) return;
+  if (remaining <= 0) remaining = timerMinutes*60;
+
+  const thisRun = ++timerRunId;
+  timerEndAt = Date.now() + remaining*1000;
+  setTimerMessage("You're in focus mode. Keep going! 🎯");
+
+  timerInterval = setInterval(() => {
+    if (thisRun !== timerRunId) return;
+    remaining = Math.max(0,Math.ceil((timerEndAt-Date.now())/1000));
+    displayTime();
+
+    if (remaining <= 0) {
+      pauseTimer();
+      if (timerMinutes === 25) {
+        game.focusSessions++;
+        game.focusMinutes += 25;
+        game.lastFocusDate = localDate();
+        save();
+        awardXP(25,"Focus session complete!");
+        renderAll();
+        setTimerMessage("Fantastic work! Take a well-deserved break. 🌱");
+      } else {
+        setTimerMessage("Break complete! Ready to focus again?");
+        showToast("Your break is over. You can do this!");
+      }
+      if (typeof Notification !== "undefined" && Notification.permission === "granted") {
+        try { new Notification("StudyQuest", {body:"Your timer is complete!"}); } catch(e) {}
+      } else {
+        alert("Your " + (timerMinutes === 25 ? "focus session" : "break") + " is complete!");
+      }
+    }
+  },250);
+}
+
+document.getElementById("timerStart").addEventListener("click",startTimer);
+document.getElementById("timerStart2").addEventListener("click",startTimer);
+document.getElementById("timerPause").addEventListener("click",pauseTimer);
+document.getElementById("timerPause2").addEventListener("click",pauseTimer);
+document.getElementById("timerReset").addEventListener("click",resetTimer);
+document.getElementById("timerReset2").addEventListener("click",resetTimer);
+
+document.querySelectorAll("[data-minutes]").forEach(button => {
+  button.addEventListener("click", () => {
+    timerMinutes = Number(button.dataset.minutes);
+    document.querySelectorAll("[data-minutes]").forEach(b => {
+      b.classList.toggle("active",b.dataset.minutes === button.dataset.minutes);
+    });
+    resetTimer();
+  });
+});
+
+document.getElementById("timerPause").addEventListener("click",() =>
+  setTimerMessage("Timer paused. Resume whenever you're ready."));
+document.getElementById("timerPause2").addEventListener("click",() =>
+  setTimerMessage("Timer paused. Resume whenever you're ready."));
+
+// ===============================
+// ACHIEVEMENTS
+// ===============================
+const achievements = [
+  {id:"first",icon:"🌱",name:"First Steps",desc:"Complete your first task.",test:()=>game.completedTotal>=1},
+  {id:"five",icon:"📚",name:"Bookworm",desc:"Complete 5 tasks.",test:()=>game.completedTotal>=5},
+  {id:"ten",icon:"🎓",name:"Dedicated Scholar",desc:"Complete 10 tasks.",test:()=>game.completedTotal>=10},
+  {id:"level3",icon:"⭐",name:"Rising Star",desc:"Reach Level 3.",test:()=>getLevel()>=3},
+  {id:"level5",icon:"🏆",name:"High Achiever",desc:"Reach Level 5.",test:()=>getLevel()>=5},
+  {id:"focus",icon:"🎯",name:"Deep Focus",desc:"Complete a focus session.",test:()=>game.focusSessions>=1},
+  {id:"quiz",icon:"🧠",name:"Quick Thinker",desc:"Answer 5 quiz questions correctly.",test:()=>game.quizCorrect>=5},
+  {id:"xp",icon:"⚡",name:"XP Collector",desc:"Earn 250 XP.",test:()=>game.xp>=250},
+  {id:"quests",icon:"⚔",name:"Quest Hunter",desc:"Claim all daily quests in one day.",test:()=>game.questClaims.length>=3}
+];
+
+function renderAchievements() {
+  const unlocked = achievements.filter(a => a.test());
+  document.getElementById("badgeCount").textContent = unlocked.length + "/" + achievements.length;
+  document.getElementById("badgeXP").textContent = game.xp;
+  document.getElementById("achievementGrid").innerHTML = achievements.map(a =>
+    `<div class="badge-card ${a.test() ? "" : "locked"}">
+      <div class="badge-icon">${a.test() ? a.icon : "🔒"}</div>
+      <strong>${a.name}</strong><p>${a.test() ? "Achievement unlocked!" : a.desc}</p>
+    </div>`
+  ).join("");
+}
+
+// ===============================
+// PROFILE AND SETTINGS
+// ===============================
+document.getElementById("nameForm").addEventListener("submit",event => {
+  event.preventDefault();
+  const name = document.getElementById("playerName").value.trim().slice(0,25);
+  if (!name) return;
+  game.name = name;
+  save();
+  renderAll();
+  showToast("Profile updated. Welcome, " + name + "!");
+});
+
+document.getElementById("resetGame").addEventListener("click",() => {
+  if (!confirm("Reset ALL StudyQuest progress? Your tasks, XP, achievements, and statistics will be erased.")) return;
+  pauseTimer();
+  game = newGame();
+  save();
+  quizIndex = 0;
+  quizScore = 0;
+  startQuiz();
+  resetTimer();
+  renderAll();
+  openView("home");
+  showToast("A fresh adventure begins! 🌱");
+});
+
+// ===============================
+// DASHBOARD AND STARTUP
+// ===============================
+function renderStats() {
+  const level = getLevel();
+  const inLevel = xpIntoLevel();
+  const done = game.tasks.filter(t => t.done).length;
+
+  document.getElementById("xpStat").textContent = game.xp + " XP";
+  document.getElementById("levelStat").textContent = "Level " + level;
+  document.getElementById("levelBar").style.width = inLevel + "%";
+  document.getElementById("levelProgress").textContent =
+    inLevel + " / 100 XP · " + getXPToNext() + " XP to next level";
+  document.getElementById("taskStat").textContent = done;
+  document.getElementById("focusStat").textContent = game.focusSessions;
+  document.getElementById("profileLevel").textContent = "Level " + level + " " + game.name;
+  document.getElementById("profileSummary").textContent =
+    game.xp + " XP · " + done + " tasks completed · " + game.focusSessions + " focus sessions";
+  document.getElementById("dateGreeting").textContent =
+    new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"}).toUpperCase();
+}
+
+function renderAll() {
+  refreshDailyQuests();
+  renderStats();
+  renderTasks();
+  renderQuests();
+  renderGarden();
+  renderAchievements();
+  document.getElementById("gardenTheme").value = game.gardenTheme;
+}
+
+startQuiz();
+renderAll();
+displayTime();
+</script>
+</body>
+</html>
+
